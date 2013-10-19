@@ -28,6 +28,7 @@ stackstrap-resources:
   virtualenv:
     - managed
     - name: /home/stackstrap/virtualenv
+    - requirements: /application/requirements.txt
     - user: stackstrap
     - system_site_packages: True
     - require:
