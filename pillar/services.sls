@@ -6,8 +6,10 @@
 
 svc:
 
-{% if grains['os'] == 'Ubuntu' %}
+# PostgreSQL
   postgres: 'postgresql'
-{% endif %}
+
+# Nginx
+  nginx: 'nginx'
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
