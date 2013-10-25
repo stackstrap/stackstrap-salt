@@ -24,4 +24,12 @@ uwsgi:
     - require:
       - pip: uwsgi
 
+/usr/lib/uwsgi/plugins:
+  file:
+    - directory
+    - owner: root
+    - group: root
+    - mode: 755
+    - makedirs: True
+
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
