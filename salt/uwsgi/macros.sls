@@ -15,7 +15,9 @@ uwsgiapp_{{ name }}:
     - group: root
     - mode: 555
     - require:
-      - pip: uwsgi
+      - pkg: uwsgi
+    - watch_in:
+      - service: uwsgi
     - defaults:
         name: {{ name }}
         home: {{ home }}
@@ -32,6 +34,8 @@ uwsgiapp_{{ name }}_enabled:
   file:
     - {% if enabled %}symlink{% else %}absent{% endif %}
     - name: /etc/uwsgi/apps-enabled/{{ name }}.ini
+    - watch_in:
+      - service: uwsgi
     {% if enabled %}
     - target: /etc/uwsgi/apps-available/{{ name }}.ini
     {% endif %}

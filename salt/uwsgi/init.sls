@@ -11,25 +11,28 @@ uwsgi_requirements:
       - python-dev
 
 uwsgi:
-  pip:
+  pkg:
     - installed
-    - pkgs:
-        uwsgi
     - require:
       - pkg: uwsgi_requirements
+    - names:
+      - uwsgi
+      - uwsgi-plugin-python
 
   service:
     - running
     - enable: True
     - require:
-      - pip: uwsgi
+      - pkg: uwsgi
 
-/usr/lib/uwsgi/plugins:
+uwsgi-dirs:
   file:
     - directory
     - owner: root
     - group: root
     - mode: 755
     - makedirs: True
+    - names:
+      - /usr/lib/uwsgi/plugins
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :

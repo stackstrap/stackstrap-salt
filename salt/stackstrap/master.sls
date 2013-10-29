@@ -16,6 +16,21 @@ include:
 {% from "nginx/macros.sls" import nginxsite %}
 {% from "uwsgi/macros.sls" import uwsgiapp %}
 
+# TODO
+python-psycopg2:
+  pkg:
+    - installed
+
+# set mode so we can use it later
+{% set mode = pillar.get('stackstrap', {}).get('mode', 'dev') %}
+
+# which nginx template should we use
+{% if mode == 'dev' %}
+{% set nginx_template = "proxy-django.conf" %}
+{% else %}
+{% set nginx_template = "uwsgi-django.conf" %}
+{% endif %}
+
 {{ skeleton("stackstrap", 6000, 6000) }}
 {{ postgres_user_db("stackstrap") }}
 
@@ -25,20 +40,25 @@ include:
 # TODO: SSL 
 {{ nginxsite("stackstrap-master", "stackstrap", "stackstrap",
     server_name=pillar.get('stackstrap', {}).get('http_server_name', '_'),
-    template="uwsgi-django.conf",
-    root=None,
+    template=nginx_template,
+    root=False,
     create_root=False,
     defaults={
       'listen': pillar.get('stackstrap', {}).get('http_listen', '80'),
       'port': 6000,
+      'mode': mode,
     }
 ) }}
 
+{% if mode == 'dev' %}
+# TODO - run django-admin runserver
+{% else %}
 {{ uwsgiapp("stackstrap", "/home/stackstrap/virtualenv", "stackstrap", "stackstrap",
             "/application/stackstrap", "127.0.0.1:6000", "stackstrap/wsgi.py",
-            "DJANGO_SETTINGS_MODULE=stackstrap.settings.%s" % pillar.get('stackstrap', {}).get('settings', 'dev'),
+            "DJANGO_SETTINGS_MODULE=stackstrap.settings.%s" % pillar.get('stackstrap', {}).get('mode'),
             reload=True
 ) }}
+{% endif %}
 
 stackstrap_env:
   virtualenv:
