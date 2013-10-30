@@ -20,6 +20,10 @@ include:
 python-psycopg2:
   pkg:
     - installed
+git:
+  pkg:
+    - installed
+
 
 # set mode so we can use it later
 {% set mode = pillar.get('stackstrap', {}).get('mode', 'dev') %}
