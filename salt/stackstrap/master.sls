@@ -72,6 +72,17 @@ stackstrap_salt_dirs_base:
     - require:
       - file: stackstrap_salt_dirs_base
 
+
+# setup the directory our project specific sls files will live in
+/home/stackstrap/project_states:
+  file:
+    - directory
+    - user: stackstrap
+    - group: stackstrap
+    - mode: 750
+    - require:
+      - user: stackstrap
+
 # setup an nginx site on the specified pillar, or use "_" if one doesn't exist
 # so that we catch all traffic
 #
