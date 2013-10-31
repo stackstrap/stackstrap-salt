@@ -38,6 +38,40 @@ git:
 {{ skeleton("stackstrap", 6000, 6000) }}
 {{ postgres_user_db("stackstrap") }}
 
+# make sure the root user is a member of the saltstack group so that 
+# permissive_pki_access will allow us to write to the pki dir
+root_in_stackstack_group:
+  user:
+    - present
+    - name: root
+    - groups:
+      - stackstrap
+    - require:
+      - group: stackstrap
+
+# set our permissions on /etc/salt/pki
+# salt's permission system requires that the top level pki & master
+# dirs be 750, but we can make our minions dir 770 so we can write
+# to it
+stackstrap_salt_dirs_base:
+  file:
+    - directory
+    - group: stackstrap
+    - mode: 750
+    - require:
+      - user: root_in_stackstack_group
+    - names:
+      - /etc/salt/pki
+      - /etc/salt/pki/master
+
+/etc/salt/pki/master/minions:
+  file:
+    - directory
+    - group: stackstrap
+    - mode: 770
+    - require:
+      - file: stackstrap_salt_dirs_base
+
 # setup an nginx site on the specified pillar, or use "_" if one doesn't exist
 # so that we catch all traffic
 #
