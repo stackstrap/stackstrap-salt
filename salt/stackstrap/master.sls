@@ -26,7 +26,7 @@ git:
 
 
 # set mode so we can use it later
-{% set mode = pillar.get('stackstrap', {}).get('mode', 'dev') %}
+{% set mode = grains.get('stackstrap', {}).get('mode', 'dev') %}
 
 # which nginx template should we use
 {% if mode == 'dev' %}
@@ -83,17 +83,17 @@ stackstrap_salt_dirs_base:
     - require:
       - user: stackstrap
 
-# setup an nginx site on the specified pillar, or use "_" if one doesn't exist
+# setup an nginx site on the specified grains, or use "_" if one doesn't exist
 # so that we catch all traffic
 #
 # TODO: SSL 
 {{ nginxsite("stackstrap-master", "stackstrap", "stackstrap",
-    server_name=pillar.get('stackstrap', {}).get('http_server_name', '_'),
+    server_name=grains.get('stackstrap', {}).get('http_server_name', '_'),
     template=nginx_template,
     root=False,
     create_root=False,
     defaults={
-      'listen': pillar.get('stackstrap', {}).get('http_listen', '80'),
+      'listen': grains.get('stackstrap', {}).get('http_listen', '80'),
       'port': 6000,
       'mode': mode,
     }
@@ -104,7 +104,7 @@ stackstrap_salt_dirs_base:
 {% else %}
 {{ uwsgiapp("stackstrap", "/home/stackstrap/virtualenv", "stackstrap", "stackstrap",
             "/application/stackstrap", "127.0.0.1:6000", "stackstrap/wsgi.py",
-            "DJANGO_SETTINGS_MODULE=stackstrap.settings.%s" % pillar.get('stackstrap', {}).get('mode'),
+            "DJANGO_SETTINGS_MODULE=stackstrap.settings.%s" % grains.get('stackstrap', {}).get('mode'),
             reload=True
 ) }}
 {% endif %}
@@ -113,7 +113,7 @@ stackstrap_env:
   virtualenv:
     - managed
     - name: /home/stackstrap/virtualenv
-    - requirements: /application/requirements/{{ pillar.get('stackstrap', {}).get('requirements', 'base') }}.txt
+    - requirements: /application/requirements/{{ grains.get('stackstrap', {}).get('requirements', 'base') }}.txt
     - user: stackstrap
     - system_site_packages: True
     - require:
