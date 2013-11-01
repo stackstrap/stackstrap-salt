@@ -114,8 +114,9 @@ stackstrap_env:
   virtualenv:
     - managed
     - name: /home/stackstrap/virtualenv
-    - requirements: /home/stackstrap/application/requirements/{{ config.get('requirements', 'base') }}.txt
+    - requirements: /home/stackstrap/application/requirements/{{ config.get('requirements', mode) }}.txt
     - user: stackstrap
+    - no_chown: True
     - system_site_packages: True
     - require:
       - user: stackstrap
