@@ -105,7 +105,7 @@ stackstrap_salt_dirs_base:
 # TODO - run django-admin runserver
 {% else %}
 {{ uwsgiapp("stackstrap", "/home/stackstrap/virtualenv", "stackstrap", "stackstrap",
-            "/home/stackstrap/application/stackstrap", "127.0.0.1:6000", "stackstrap/wsgi.py",
+            "/home/stackstrap/current/application/stackstrap", "127.0.0.1:6000", "stackstrap/wsgi.py",
             "DJANGO_SETTINGS_MODULE=stackstrap.settings.%s" % config.get('settings', mode)
 ) }}
 {% endif %}
@@ -114,7 +114,7 @@ stackstrap_env:
   virtualenv:
     - managed
     - name: /home/stackstrap/virtualenv
-    - requirements: /home/stackstrap/application/requirements/{{ config.get('requirements', mode) }}.txt
+    - requirements: /home/stackstrap/current/application/requirements/{{ config.get('requirements', mode) }}.txt
     - user: stackstrap
     - no_chown: True
     - system_site_packages: True
