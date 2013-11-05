@@ -85,6 +85,16 @@ stackstrap_salt_dirs_base:
     - require:
       - user: stackstrap
 
+# setup the directory for our project logs
+/home/stackstrap/logs:
+  file:
+    - directory
+    - user: stackstrap
+    - group: stackstrap
+    - mode: 750
+    - require:
+      - user: stackstrap
+
 # setup an nginx site on the specified config, or use "_" if one doesn't exist
 # so that we catch all traffic
 #
