@@ -104,8 +104,11 @@ stackstrap_salt_dirs_base:
 {% if mode == 'dev' %}
 # TODO - run django-admin runserver
 {% else %}
-{{ uwsgiapp("stackstrap", "/home/stackstrap/virtualenv", "stackstrap", "stackstrap",
-            "/home/stackstrap/current/application/stackstrap", "127.0.0.1:6000", "stackstrap/wsgi.py",
+{{ uwsgiapp("stackstrap", "stackstrap", "stackstrap", "/home/stackstrap",
+            "/home/stackstrap/virtualenv",
+            "/home/stackstrap/current/application/stackstrap",
+            "127.0.0.1:6000",
+            "stackstrap/wsgi.py",
             "DJANGO_SETTINGS_MODULE=stackstrap.settings.%s" % config.get('settings', mode)
 ) }}
 {% endif %}
@@ -121,5 +124,17 @@ stackstrap_env:
     - require:
       - user: stackstrap
       - pkg: virtualenv_pkgs
+
+stackstrap_django_dirs:
+  file:
+    - directory
+    - owner: stackstrap
+    - group: stackstrap
+    - mode: 755
+    - require:
+      - file: /home/stackstrap/domains/stackstrap-master
+    - names:
+      - /home/stackstrap/domains/stackstrap-master/static
+      - /home/stackstrap/domains/stackstrap-master/media
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :

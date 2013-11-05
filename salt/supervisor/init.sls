@@ -1,23 +1,20 @@
 #
-# uWSGI state file
+# Supervisor state file
 # 
 # Copyright 2013 FatBox Inc
 #
 
-include:
-  - supervisor
-
-uwsgi_requirements:
+supervisor_requirements:
   pkg:
     - installed
     - names:
       - python-pip
-      - python-dev
 
-uwsgi:
+supervisor:
   pip:
     - installed
     - require:
-      - pkg: uwsgi_requirements
+      - pkg: supervisor_requirements
+
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :

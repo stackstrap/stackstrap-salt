@@ -4,22 +4,46 @@
 # Copyright 2013 FatBox Inc
 #
 
-{% macro uwsgiapp(name, home, user, group, dir, socket, file, env, reload=False, procs=1, enabled=True) %}
+{% from "supervisor/macros.sls" import supervise %}
+
+{% macro uwsgiapp(name, user, group, base, home, dir, socket, file, env, procs=1, enabled=True) %}
+
+{{ base }}/uwsgi:
+  file:
+    - directory
+    - user: {{ user }}
+    - group: {{ group }}
+    - mode: 750
+
+uwsgi_{{ name }}_dirs:
+  file:
+    - directory
+    - require:
+      - file: {{ base }}/uwsgi
+    - user: {{ user }}
+    - group: {{ group }}
+    - mode: 750
+    - names:
+      - {{ base }}/uwsgi/conf
+      - {{ base }}/uwsgi/run
+      - {{ base }}/uwsgi/log
+
 uwsgiapp_{{ name }}:
   file:
     - managed
-    - name: /etc/uwsgi/apps-available/{{ name }}.ini
+    - name: {{ base }}/uwsgi/conf/{{ name }}.ini
     - source: salt://uwsgi/files/template.ini
     - template: jinja
-    - user: root
-    - group: root
-    - mode: 555
+    - user: {{ user }}
+    - group: {{ group }}
+    - mode: 550
     - require:
-      - pkg: uwsgi
+      - pip: uwsgi
     - watch_in:
-      - service: uwsgi
+      - service: supervise_{{ name }}_uwsgi_reload
     - defaults:
         name: {{ name }}
+        base: {{ base }}
         home: {{ home }}
         user: {{ user }}
         group: {{ group }}
@@ -27,18 +51,17 @@ uwsgiapp_{{ name }}:
         socket: {{ socket }}
         file: {{ file }}
         env: {{ env }}
-        reload: {{ reload }}
         procs: {{ procs }}
 
-uwsgiapp_{{ name }}_enabled:
-  file:
-    - {% if enabled %}symlink{% else %}absent{% endif %}
-    - name: /etc/uwsgi/apps-enabled/{{ name }}.ini
-    - watch_in:
-      - service: uwsgi
-    {% if enabled %}
-    - target: /etc/uwsgi/apps-available/{{ name }}.ini
-    {% endif %}
+{{ supervise(name, base, user, group, {
+  'uwsgi': {
+    'command': 'uwsgi --ini %s/uwsgi/conf/%s.ini' % (base, name),
+    'user': user,
+    'redirect_stderr': 'true',
+    'stdout_logfile': '%s/uwsgi/log/uwsgi.log' % base,
+    'stopsignal': 'INT'
+  }
+}) }}
 
 {% endmacro %}
 
