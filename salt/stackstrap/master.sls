@@ -104,10 +104,13 @@ stackstrap_salt_dirs_base:
     template=nginx_template,
     root=False,
     create_root=False,
+    ssl=config.get('http_ssl', False),
     defaults={
       'listen': config.get('http_listen', '80'),
       'port': 6000,
       'mode': mode,
+      'ssl_certificate': config.get('http_ssl_certificate'),
+      'ssl_certificate_key': config.get('http_ssl_certificate_key'),
     }
 ) }}
 
