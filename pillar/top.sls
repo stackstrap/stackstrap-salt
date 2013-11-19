@@ -9,4 +9,9 @@ base:
     - packages
     - services
 
+  '^user-(\d+)-project-(\d+)$':
+    - match: pcre
+    - stackstrap.auto.dev
+
+
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :

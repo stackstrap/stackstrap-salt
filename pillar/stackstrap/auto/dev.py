@@ -1,5 +1,5 @@
 #
-# StackStrap auto provisioning module for dev (vagrant environments)
+# Stackstrap auto dev pillar SLS module
 # 
 # Copyright 2013 FatBox Inc
 #
