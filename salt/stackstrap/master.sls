@@ -11,10 +11,11 @@ include:
   - virtualenv
   - postgres
 
-{% from "utils/users.sls" import skeleton %}
-{% from "postgres/macros.sls" import postgres_user_db %}
-{% from "nginx/macros.sls" import nginxsite %}
-{% from "uwsgi/macros.sls" import uwsgiapp %}
+{% from "utils/users.sls" import skeleton -%}
+{% from "postgres/macros.sls" import postgres_user_db -%}
+{% from "nginx/macros.sls" import nginxsite -%}
+{% from "uwsgi/macros.sls" import uwsgiapp -%}
+{% from "supervisor/macros.sls" import supervise -%}
 
 # TODO
 python-psycopg2:
@@ -75,8 +76,7 @@ stackstrap_salt_dirs_base:
       - file: stackstrap_salt_dirs_base
 
 
-# setup the directory our project specific sls files will live in
-/home/stackstrap/project_states:
+stackstrap_dirs:
   file:
     - directory
     - user: stackstrap
@@ -84,16 +84,13 @@ stackstrap_salt_dirs_base:
     - mode: 750
     - require:
       - user: stackstrap
+    - names:
+      # setup the directory our project specific sls files will live in
+      - /home/stackstrap/project_states
+      - /home/stackstrap/project_pillars
 
-# setup the directory for our project logs
-/home/stackstrap/logs:
-  file:
-    - directory
-    - user: stackstrap
-    - group: stackstrap
-    - mode: 750
-    - require:
-      - user: stackstrap
+      # setup the directory for our project logs
+      - /home/stackstrap/logs
 
 # setup an nginx site on the specified config, or use "_" if one doesn't exist
 # so that we catch all traffic
