@@ -89,6 +89,9 @@ stackstrap_dirs:
       - /home/stackstrap/project_states
       - /home/stackstrap/project_pillars
 
+      # private files that need to be outside of a web accessible dir
+      - /home/stackstrap/private
+
       # setup the directory for our project logs
       - /home/stackstrap/logs
 
