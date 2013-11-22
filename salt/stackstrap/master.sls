@@ -85,12 +85,12 @@ stackstrap_dirs:
     - require:
       - user: stackstrap
     - names:
-      # setup the directory our project specific sls files will live in
-      - /home/stackstrap/project_states
-      - /home/stackstrap/project_pillars
-
       # private files that need to be outside of a web accessible dir
       - /home/stackstrap/private
+
+      # setup the directory our project specific sls files will live in
+      - /home/stackstrap/private/project_states
+      - /home/stackstrap/private/project_pillars
 
       # setup the directory for our project logs
       - /home/stackstrap/logs
