@@ -6,7 +6,7 @@ base:
   'stackstrap-master*':
     - stackstrap.master
 
-  '^user-(\d+)-project-(\d+)$':
+  '^project-(\d+)$':
     - match: pcre
     - stackstrap.auto.dev
 
