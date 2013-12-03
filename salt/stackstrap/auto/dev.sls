@@ -6,6 +6,6 @@
 
 # now include the state for the project by using the id of the project
 include:
-  - project-{{ opts['id'] }}
+  - {{ opts['id'] }}
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
