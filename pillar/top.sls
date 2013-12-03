@@ -9,7 +9,7 @@ base:
     - packages
     - services
 
-  '^user-(\d+)-project-(\d+)$':
+  '^project-(\d+)$':
     - match: pcre
     - stackstrap.auto.dev
 
