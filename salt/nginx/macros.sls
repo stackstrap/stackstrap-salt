@@ -35,9 +35,10 @@
           custom=custom) }}
 {% endif %}
 
-/home/{{ user }}/domains/{{ domain }}:
+{{ user }}_{{ domain }}_{{ listen }}_domains_dir:
   file:
     - directory
+    - name: /home/{{ user }}/domains/{{ domain }}
     - user: {{ user }}
     - group: {{ group or user }}
     - mode: 755
@@ -80,7 +81,7 @@
         {{ n }}: "{{ defaults[n] }}"{% endfor %}{% endif %}
 
 {% if custom %}
-/etc/nginx/sites-available/{{ domain }}.{{ listen }}-custom:
+/etc/nginx/sites-available/{{ enabled_name or domain }}.{{ listen }}-custom:
   file:
     - managed
     - user: root
