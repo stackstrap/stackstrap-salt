@@ -127,6 +127,7 @@ stackstrap_dirs:
       'mode': mode,
       'ssl_certificate': config.get('http_ssl_certificate'),
       'ssl_certificate_key': config.get('http_ssl_certificate_key'),
+      'sendfile_off': mode == 'dev'
     }
 ) }}
 
