@@ -97,16 +97,32 @@ stackstrap_dirs:
 
 # setup an nginx site on the specified config, or use "_" if one doesn't exist
 # so that we catch all traffic
-#
-# TODO: SSL 
+{% set http_ssl = config.get('http_ssl', False) %}
+{% set http_server_name = config.get('http_server_name', '_') %}
+{% if http_ssl %}
+{% set http_listen = '443' %}
+
+{{ nginxsite("stackstrap-master", "stackstrap", "stackstrap",
+    server_name=http_server_name,
+    template="ssl-redirect.conf",
+    root=False,
+    create_root=False,
+    defaults={
+      'redirect_http_host': True
+    }
+) }}
+{% else %}
+{% set http_listen = '80' %}
+{% endif %}
+
 {{ nginxsite("stackstrap-master", "stackstrap", "stackstrap",
     server_name=config.get('http_server_name', '_'),
     template=nginx_template,
     root=False,
     create_root=False,
-    ssl=config.get('http_ssl', False),
+    ssl=http_ssl,
+    listen=http_listen,
     defaults={
-      'listen': config.get('http_listen', '80'),
       'port': 6000,
       'mode': mode,
       'ssl_certificate': config.get('http_ssl_certificate'),
