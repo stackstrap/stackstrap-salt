@@ -13,7 +13,7 @@ include:
 
 {% from "utils/users.sls" import skeleton -%}
 {% from "postgres/macros.sls" import postgres_user_db -%}
-{% from "nginx/macros.sls" import nginxsite -%}
+{% from "nginx/macros.sls" import nginxsite with context -%}
 {% from "uwsgi/macros.sls" import uwsgiapp -%}
 {% from "supervisor/macros.sls" import supervise -%}
 
