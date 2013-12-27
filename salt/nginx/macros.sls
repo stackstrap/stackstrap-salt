@@ -6,7 +6,7 @@
 
 {% macro nginxsite(domain, user, group,
                    template='standard-server.conf',
-                   defaults=None,
+                   defaults={},
                    listen='80',
                    server_name=None,
                    root='public',
@@ -57,6 +57,14 @@
       - file: /home/{{ user }}/domains/{{ domain }}
 {% endif %}
 
+# if we're being run in a VirtualBox instance we turn sendfile off
+# this requires that the macros file be imported `with context`, but to avoid
+# having the high state run error out if it's not imported with context we 
+# check to make sure grains is defined first
+{% if grains is defined %}
+{% if grains.get('virtual') == 'VirtualBox' %}{% do defaults.update({'sendfile_off': True}) %}{% endif %}
+{% endif %}
+
 /etc/nginx/sites-available/{{ domain }}.{{ listen }}.conf:
   file:
     - managed
@@ -77,8 +85,8 @@
         group: {{ group }}
         root: {{ root }}
         ssl: {{ ssl }}{% if custom %}
-        custom: "sites-available/{{ domain }}.{{ listen }}-custom"{% endif %}{% if defaults %}{% for n in defaults %}
-        {{ n }}: "{{ defaults[n] }}"{% endfor %}{% endif %}
+        custom: "sites-available/{{ domain }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
+        {{ n }}: "{{ defaults[n] }}"{% endfor %}
 
 {% if custom %}
 /etc/nginx/sites-available/{{ enabled_name or domain }}.{{ listen }}-custom:
