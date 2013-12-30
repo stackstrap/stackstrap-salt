@@ -127,7 +127,9 @@ stackstrap_dirs:
       'mode': mode,
       'ssl_certificate': config.get('http_ssl_certificate'),
       'ssl_certificate_key': config.get('http_ssl_certificate_key'),
-      'sendfile_off': mode == 'dev'
+      'sendfile_off': mode == 'dev',
+      'static_path': '/home/stackstrap/static',
+      'media_path': '/home/stackstrap/media'
     }
 ) }}
 
@@ -155,16 +157,18 @@ stackstrap_env:
       - user: stackstrap
       - pkg: virtualenv_pkgs
 
-stackstrap_django_dirs:
+/home/stackstrap/domains/stackstrap-master/static:
   file:
-    - directory
+    - symlink
+    - target: /home/stackstrap/static
     - owner: stackstrap
     - group: stackstrap
-    - mode: 755
-    - require:
-      - file: /home/stackstrap/domains/stackstrap-master
-    - names:
-      - /home/stackstrap/domains/stackstrap-master/static
-      - /home/stackstrap/domains/stackstrap-master/media
+
+/home/stackstrap/domains/stackstrap-master/media:
+  file:
+    - symlink
+    - target: /home/stackstrap/media
+    - owner: stackstrap
+    - group: stackstrap
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
