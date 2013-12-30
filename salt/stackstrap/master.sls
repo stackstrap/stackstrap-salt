@@ -157,18 +157,16 @@ stackstrap_env:
       - user: stackstrap
       - pkg: virtualenv_pkgs
 
-/home/stackstrap/domains/stackstrap-master/static:
+stackstrap_django_dirs:
   file:
-    - symlink
-    - target: /home/stackstrap/static
+    - directory
     - owner: stackstrap
     - group: stackstrap
-
-/home/stackstrap/domains/stackstrap-master/media:
-  file:
-    - symlink
-    - target: /home/stackstrap/media
-    - owner: stackstrap
-    - group: stackstrap
+    - mode: 755
+    - require:
+      - file: /home/stackstrap/domains/stackstrap-master
+    - names:
+      - /home/stackstrap/domains/stackstrap-master/static
+      - /home/stackstrap/domains/stackstrap-master/media
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :
