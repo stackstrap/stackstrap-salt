@@ -1,7 +1,7 @@
 #
 # MySQL Sever SLS module
 # 
-# Copyright 2012 FatBox Inc
+# Copyright 2014 Evan Borgstrom
 #
 
 mysql-server:

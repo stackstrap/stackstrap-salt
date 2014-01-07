@@ -1,7 +1,7 @@
 #
 # Stackstrap auto dev pillar SLS module
 # 
-# Copyright 2013 FatBox Inc
+# Copyright 2014 Evan Borgstrom
 #
 
 # include the state for the project by using the id of the project

@@ -1,7 +1,7 @@
 #
 # Supervisor Macros
 # 
-# Copyright 2013 FatBox Inc
+# Copyright 2014 Evan Borgstrom
 #
 
 #

@@ -1,7 +1,7 @@
 #
 # uWSGI macros
 # 
-# Copyright 2013 FatBox Inc
+# Copyright 2014 Evan Borgstrom
 #
 
 {% from "supervisor/macros.sls" import supervise %}

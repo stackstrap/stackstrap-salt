@@ -1,7 +1,7 @@
 #
 # PostgreSQL macros
 # 
-# Copyright 2013 FatBox Inc
+# Copyright 2014 Evan Borgstrom
 #
 
 # postgres_user_db creates a simple user & database with the same name
