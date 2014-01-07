@@ -2,7 +2,7 @@
 # StackStrap Master SLS
 # This state sets up a machine to run the StackStrap master application
 # 
-# Copyright 2013 FatBox Inc
+# Copyright 2014 Evan Borgstrom
 #
 
 include:

@@ -1,7 +1,7 @@
 #
 # MySQL Macros SLS module
 # 
-# Copyright 2012 FatBox Inc
+# Copyright 2014 Evan Borgstrom
 #
 
 {% macro mysql_user_db(name, password) -%}

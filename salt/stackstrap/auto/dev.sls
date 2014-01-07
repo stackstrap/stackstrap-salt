@@ -1,7 +1,7 @@
 #
 # StackStrap auto provisioning module for dev (vagrant environments)
 # 
-# Copyright 2013 FatBox Inc
+# Copyright 2014 Evan Borgstrom
 #
 
 # now include the state for the project by using the id of the project
