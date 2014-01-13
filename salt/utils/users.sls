@@ -7,7 +7,7 @@
 {#
  # skeleton sets up a group, user & home dirs
  #}
-{% macro skeleton(name, uid, gid, password=None, groups=[]) -%}
+{% macro skeleton(name, uid, gid, password=None, groups=[], remove_groups=True) -%}
 {{ name }}:
   group:
     - present
@@ -20,6 +20,7 @@
     - shell: /bin/bash
     - home: /home/{{ name }}{% if password %}
     - password: '{{ password }}'{% endif %}
+    - remove_groups: {{ remove_groups }}
     - require:
       - group: {{ name }}
     - groups:
