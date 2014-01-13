@@ -7,7 +7,7 @@
 {#
  # skeleton sets up a group, user & home dirs
  #}
-{% macro skeleton(name, uid, gid, password=None) -%}
+{% macro skeleton(name, uid, gid, password=None, groups=[]) -%}
 {{ name }}:
   group:
     - present
@@ -22,6 +22,10 @@
     - password: '{{ password }}'{% endif %}
     - require:
       - group: {{ name }}
+    - groups:
+{% for group in groups -%}
+        - {{ group }}
+{%- endfor %}
 
 {{ name }}-dirs:
   file:
