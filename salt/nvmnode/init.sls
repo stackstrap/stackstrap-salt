@@ -31,6 +31,7 @@ install_package_json:
     - name: "source ~/.nvm/nvm.sh; npm install"
     - cwd: /vagrant
     - user: vagrant
+    - onlyif: test -f /vagrant/package.json
 
 {% if 'node_packages' in pillar %}{% for pkg in pillar['node_packages'] %}
 node_package_{{ pkg }}:
