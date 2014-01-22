@@ -12,6 +12,7 @@ nginx:
   service:
     - running
     - name: {{ pillar['svc']['nginx'] }}
+    - enable: True
     - require:
       - pkg: nginx
 
