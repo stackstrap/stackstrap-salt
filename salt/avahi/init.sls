@@ -7,6 +7,7 @@
 avahi-daemon:
   pkg:
     - installed
+    - name: {{ pillar['pkg']['avahi'] }}
 
   service:
     - running
