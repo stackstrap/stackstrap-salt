@@ -1,18 +1,16 @@
 #
-# Avahi SLS module
+# memcached SLS module
 # 
 # Copyright 2014 Evan Borgstrom
 #
 
-avahi-daemon:
+memcached:
   pkg:
     - installed
-    - name: {{ pillar['pkg']['avahi'] }}
 
   service:
     - running
-    - enable: True
     - require:
-      - pkg: avahi-daemon
+      - pkg: memcached
 
 # vim: set ft=yaml ts=2 sw=2 et sts=2 :

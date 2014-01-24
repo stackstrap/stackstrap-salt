@@ -10,6 +10,12 @@
 #
 
 pkg:
+# Avahi
+{% if grains['os_family'] == 'RedHat' %}
+  avahi: 'avahi'
+{% elif grains['os_family'] == 'Debian' %}
+  avahi: 'avahi-daemon'
+{% endif %}
 
 # Nginx
   nginx: 'nginx'
