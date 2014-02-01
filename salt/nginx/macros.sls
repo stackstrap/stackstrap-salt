@@ -73,7 +73,7 @@
     - user: root
     - group: root
     - mode: 444
-    - source: salt://nginx/files/{{ template }}
+    - source: {{ template }}
     - watch_in:
       - service: nginx
     - template: jinja
