@@ -46,6 +46,8 @@ python-mysqldb:
     - name: MySQL-python
 {% endif %}
 
+{% set mysql_root_password = salt['pillar.get']('mysql:root_password', '') %}
+
 # configure .my.cnf for root
 /root/.my.cnf:
   file:
@@ -56,7 +58,7 @@ python-mysqldb:
     - source: salt://mysql/files/root.my.cnf
     - template: jinja
     - defaults:
-        mysql_root_password: "{% if mysql_root_password is defined %}{{ mysql_root_password }}{% endif %}"
+        mysql_root_password: "{{ mysql_root_password }}"
 
 # create our setmysqlpass.sh script
 /root/setmysqlpass.sh:
@@ -70,7 +72,7 @@ python-mysqldb:
     - require:
       - service: mysql
     - defaults:
-        mysql_root_password: "{% if mysql_root_password is defined %}{{ mysql_root_password }}{% endif %}"
+        mysql_root_password: "{{ mysql_root_password }}"
 
   cmd:
     - run
