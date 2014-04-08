@@ -24,9 +24,9 @@
     - require:
       - group: {{ name }}
     - groups:
-{% for group in groups -%}
-        - {{ group }}
-{%- endfor %}
+      {% for group in groups -%}
+      - {{ group }}
+      {%- endfor %}
 
 {{ name }}-dirs:
   file:
