@@ -8,9 +8,11 @@ mysql-server:
   pkg:
     - installed
 
+{% if grains['os_family'] == 'Debian' %}
 automysqlbackup:
   pkg:
     - installed
+{% endif %}
 
 mysql:
   service:
