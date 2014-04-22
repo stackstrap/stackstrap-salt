@@ -4,6 +4,8 @@
 
 {% macro nvmnode(domain, user, group,
                  defaults={},
+                 node_packages=None,
+                 node_version=0.10.26,
                  custom=None) -%}
 
 install_nvm:
@@ -18,8 +20,8 @@ install_nvm:
 install_node:
   cmd:
     - run
-    - name: /bin/bash -c "source ~/.nvm/nvm.sh; nvm install {{ pillar['node_version'] }} && nvm alias default {{ pillar['node_version'] }} && nvm use {{ pillar['node_version'] }}"
-    - onlyif: /bin/bash -c "source ~/.nvm/nvm.sh; nvm ls {{ pillar['node_version'] }} | grep 'N/A'"
+    - name: /bin/bash -c "source ~/.nvm/nvm.sh; nvm install {{ node_version }} && nvm alias default {{ node_version }} && nvm use {{ node_version }}"
+    - onlyif: /bin/bash -c "source ~/.nvm/nvm.sh; nvm ls {{ node_version }} | grep 'N/A'"
     - user: {{ user }}
     - require:
       - cmd: install_nvm
@@ -32,7 +34,7 @@ install_package_json:
     - user: {{ user }}
     - onlyif: test -f /home/{{ user }}/domains/{{ domain }}/package.json
 
-{% if 'node_packages' in pillar %}{% for pkg in pillar['node_packages'] %}
+{% if node_packages is defined %}{% for pkg in node_packages %}
 node_package_{{ pkg }}:
   cmd:
     - run
