@@ -5,7 +5,7 @@
 {% macro nvmnode(domain, user, group,
                  defaults={},
                  node_packages=None,
-                 node_version=0.10.26,
+                 node_version='0.10.26',
                  custom=None) -%}
 
 install_nvm:
