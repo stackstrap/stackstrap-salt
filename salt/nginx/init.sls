@@ -1,6 +1,6 @@
 #
 # Nginx SLS
-# 
+#
 # Copyright 2014 Evan Borgstrom
 #
 

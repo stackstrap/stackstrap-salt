@@ -1,6 +1,6 @@
 #
 # Nginx macros
-# 
+#
 # Copyright 2014 Evan Borgstrom
 #
 
