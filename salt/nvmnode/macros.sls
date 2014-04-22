@@ -34,7 +34,7 @@ install_package_json:
     - user: {{ user }}
     - onlyif: test -f /home/{{ user }}/domains/{{ domain }}/package.json
 
-{% if node_packages is defined %}{% for pkg in node_packages %}
+{% if node_packages is iterable %}{% for pkg in node_packages %}
 node_package_{{ pkg }}:
   cmd:
     - run
