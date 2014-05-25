@@ -1,6 +1,6 @@
 #
 # StackStrap main sls
-# 
+#
 # Copyright 2014 Evan Borgstrom
 #
 
