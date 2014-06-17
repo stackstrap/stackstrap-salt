@@ -17,6 +17,7 @@ automysqlbackup:
 mysql:
   service:
     - running
+    - enable: true
     - require:
       - pkg: mysql-server
 {% if grains['os_family'] == 'RedHat' %}
