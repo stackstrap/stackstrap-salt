@@ -11,7 +11,7 @@
 install_nvm:
   cmd:
     - run
-    - name: curl -L https://raw.github.com/mikeislearning/nvm/master/install.sh | sh
+    - name: curl -L https://raw.githubusercontent.com/creationix/nvm/v0.10.0/install.sh | bash
     - unless: test -d /home/{{ user }}/.nvm
     - user: {{ user }}
     - require:
