@@ -4,6 +4,7 @@
 
 {% macro nvmnode(domain, user, group,
                  defaults={},
+                 node_globals=None,
                  node_packages=None,
                  node_version='0.10.26',
                  custom=None) -%}
@@ -25,6 +26,18 @@ install_node:
     - user: {{ user }}
     - require:
       - cmd: install_nvm
+
+{% if node_globals is iterable %}{% for global in node_globals %}
+node_global_{{ global }}:
+  cmd:
+    - run
+    - names:
+      - /bin/bash -c "source ~/.nvm/nvm.sh; npm install -g {{ global }}"
+    - unless: /bin/bash -c "source ~/.nvm/nvm.sh; npm list {{ global }}"
+    - user: {{ user }}
+    - require:
+      - cmd: install_node
+{% endfor %}{% endif %}
 
 install_package_json:
   cmd:
