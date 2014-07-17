@@ -33,7 +33,7 @@ node_global_{{ global }}:
     - run
     - names:
       - /bin/bash -c "source ~/.nvm/nvm.sh; npm install -g {{ global }}"
-    - unless: /bin/bash -c "source ~/.nvm/nvm.sh; npm list {{ global }}"
+    - unless: /bin/bash -c "source ~/.nvm/nvm.sh; npm -g ls {{ global }}"
     - user: {{ user }}
     - require:
       - cmd: install_node
