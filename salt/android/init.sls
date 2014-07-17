@@ -8,6 +8,10 @@
 include:
   - java
 
+ant:
+  pkg:
+    - installed
+
 {% if '64' in grains["cpuarch"] %}
 ia32-libs:
   pkg:
