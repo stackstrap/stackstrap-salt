@@ -1,3 +1,9 @@
+#
+# Java SLS module
+#
+# Source: http://www.webupd8.org/2012/06/how-to-install-oracle-java-7-in-debian.html
+#
+
 webupd8team-java-ppa:
   pkgrepo.managed:
     - human_name: webupd8team PPA
