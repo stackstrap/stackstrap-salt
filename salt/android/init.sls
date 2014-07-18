@@ -2,7 +2,9 @@
 # Android SDK SLS
 #
 # Note: Currently only configured for Vagrant
-# Source: https://github.com/mafrosis/dotfiles/blob/afd452d73314318f3ff664e3f24496b577324ea9/salt/android/init.sls
+# Sources:
+#   https://github.com/mafrosis/dotfiles/blob/afd452d73314318f3ff664e3f24496b577324ea9/salt/android/init.sls
+#   http://stackoverflow.com/questions/4681697/is-there-a-way-to-automate-the-android-sdk-installation
 #
 
 include:
