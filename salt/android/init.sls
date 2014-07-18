@@ -25,7 +25,7 @@ android-sdk-download:
   file.managed:
     - name: /home/vagrant/android-sdk_r23.0.2-linux.tgz
     - source: https://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
-    - source_hash: sha1=2f6d4cc7379f80fbdc45d1515c8c47890a40a781
+    - source_hash: md5=94a8c62086a7398cc0e73e1c8e65f71e
     - user: vagrant
     - group: vagrant
   cmd.wait:
