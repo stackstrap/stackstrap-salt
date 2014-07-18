@@ -5,6 +5,7 @@
 # Sources:
 #   https://github.com/mafrosis/dotfiles/blob/afd452d73314318f3ff664e3f24496b577324ea9/salt/android/init.sls
 #   http://stackoverflow.com/questions/4681697/is-there-a-way-to-automate-the-android-sdk-installation
+#   http://stackoverflow.com/questions/13707238/install-android-old-system-images-abis-from-the-command-line
 #
 
 include:
@@ -41,7 +42,7 @@ android-sdk-chown:
 
 android-sdk-update:
   cmd.run:
-    - name: ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | /home/vagrant/android-sdk-linux/tools/android update sdk -s --no-ui --filter tool,platform-tool,android-19
+    - name: ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | /home/vagrant/android-sdk-linux/tools/android update sdk --all --no-ui --filter platform-tools,android-19,sysimg-19,build-tools-19.1.0
     - user: vagrant
     - require:
       - cmd: android-sdk-download
