@@ -45,8 +45,9 @@ expect:
   pkg:
     - installed
 
-salt://android/files/update.exp
+android-sdk-update:
   cmd.run:
+    - name: salt://android/files/update.exp
     - user: vagrant
     - require:
       - cmd: android-sdk-download
