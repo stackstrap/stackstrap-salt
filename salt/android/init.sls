@@ -6,6 +6,7 @@
 #   https://github.com/mafrosis/dotfiles/blob/afd452d73314318f3ff664e3f24496b577324ea9/salt/android/init.sls
 #   http://stackoverflow.com/questions/4681697/is-there-a-way-to-automate-the-android-sdk-installation
 #   http://stackoverflow.com/questions/13707238/install-android-old-system-images-abis-from-the-command-line
+#   https://github.com/gildegoma/chef-android-sdk
 #
 
 include:
