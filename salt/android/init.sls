@@ -41,11 +41,14 @@ android-sdk-chown:
     - require:
       - cmd: android-sdk-download
 
-android-sdk-update:
+expect:
+  pkg:
+    - installed
+
+salt://android/files/update.exp
   cmd.run:
-    - name: /home/vagrant/android-sdk-linux/tools/android update sdk --all --no-ui --force --filter platform-tools,android-19,sysimg-19,build-tools-19.1.0
     - user: vagrant
     - require:
       - cmd: android-sdk-download
       - pkg: jdk-install
-
+      - pkg: expect
