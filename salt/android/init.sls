@@ -42,7 +42,7 @@ android-sdk-chown:
 
 android-sdk-update:
   cmd.run:
-    - name: ( sleep 5 && while [ 1 ]; do sleep 1; echo y; done ) | /home/vagrant/android-sdk-linux/tools/android update sdk --all --no-ui --filter platform-tools,android-19,sysimg-19,build-tools-19.1.0
+    - name: /home/vagrant/android-sdk-linux/tools/android update sdk --all --no-ui --force --filter platform-tools,android-19,sysimg-19,build-tools-19.1.0
     - user: vagrant
     - require:
       - cmd: android-sdk-download
