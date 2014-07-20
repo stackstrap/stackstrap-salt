@@ -30,13 +30,13 @@ android-abd-fix:
 
 android-sdk-download:
   file.managed:
-    - name: /home/vagrant/android-sdk_r22.0.1-linux.tgz
-    - source: https://dl.google.com/android/android-sdk_r22.0.1-linux.tgz
-    - source_hash: sha1=2f6d4cc7379f80fbdc45d1515c8c47890a40a781
+    - name: /home/vagrant/android-sdk_r23.0.2-linux.tgz
+    - source: https://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
+    - source_hash: md5=94a8c62086a7398cc0e73e1c8e65f71e
     - user: vagrant
     - group: vagrant
   cmd.wait:
-    - name: tar xzf /home/vagrant/android-sdk_r22.0.1-linux.tgz
+    - name: tar xzf /home/vagrant/android-sdk_r23.0.2-linux.tgz
     - user: vagrant
     - watch:
       - file: android-sdk-download
@@ -47,11 +47,15 @@ android-sdk-chown:
     - require:
       - cmd: android-sdk-download
 
+expect:
+  pkg:
+    - installed
+
 android-sdk-update:
-  cmd.run:
-    - name: echo "y" | /home/vagrant/android-sdk-linux/tools/android update sdk -s --no-ui --filter tool,platform-tool,android-16
+  cmd.script:
+    - name: salt://android/files/update.exp
     - user: vagrant
     - require:
       - cmd: android-sdk-download
       - pkg: jdk-install
-
+      - pkg: expect

@@ -1,0 +1,11 @@
+#!/usr/bin/expect
+
+spawn /home/vagrant/android-sdk-linux/tools/android update sdk --no-ui --all --filter platform-tools,android-19,sysimg-19,build-tools-19.1.0
+set timeout 1800
+expect {
+  "Do you accept the license '*-license-*'*" {
+	exp_send "y\r"
+	exp_continue
+  }
+  eof
+}
