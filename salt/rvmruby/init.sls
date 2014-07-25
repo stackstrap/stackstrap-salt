@@ -13,4 +13,4 @@ rvm_deps:
       - gawk
       - sed
       - curl
-
+      - git-core
