@@ -1,6 +1,7 @@
 {% macro rvmruby(domain, user, group,
                  defaults={},
                  ruby_version='1.9.3',
+                 ruby_gemset=False,
                  custom=None) -%}
 
 install_rvm:
@@ -20,6 +21,18 @@ install_ruby:
     - user: {{ user }}
     - require:
       - cmd: install_rvm
+
+{% if ruby_gemset %}
+install_gemset:
+  cmd:
+    - run
+    - name: /bin/bash -c "source ~/.rvm/scripts/rvm; rvm gemset create {{ ruby_gemset }} && rvm --default gemset use {{ ruby_gemset }}"
+    - unless: /bin/bash -c "source ~/.rvm/scripts/rvm; rvm gemset list | grep '{{ ruby_gemset }}'"
+    - user: {{ user }}
+    - require:
+      - cmd: install_rvm
+      - cmd: install_ruby
+{% endif %}
 
 {% endmacro %}
 
