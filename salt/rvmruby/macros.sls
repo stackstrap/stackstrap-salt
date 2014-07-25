@@ -2,6 +2,7 @@
                  defaults={},
                  ruby_version='1.9.3',
                  ruby_gemset=False,
+                 bundle_install=True,
                  custom=None) -%}
 
 install_rvm:
@@ -32,6 +33,16 @@ install_gemset:
     - require:
       - cmd: install_rvm
       - cmd: install_ruby
+{% endif %}
+
+{% if bundle_install %}
+bundle_install_gems:
+  cmd:
+    - run
+    - name: "source ~/.rvm/scripts/rvm; bundle install"
+    - cwd: /home/{{ user }}/domains/{{ domain }}
+    - user: {{ user }}
+    - onlyif: test -f /home/{{ user }}/domains/{{ domain }}/Gemfile.lock
 {% endif %}
 
 {% endmacro %}
