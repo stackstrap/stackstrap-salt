@@ -80,7 +80,6 @@
       - service: nginx
     - template: jinja
     - defaults:
-        auth: {{ auth }}
         server_name: "{{ server_name or domain }}"
         listen: "{{ listen }}"
         domain: {{ domain }}
