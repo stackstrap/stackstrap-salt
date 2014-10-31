@@ -5,7 +5,7 @@
 #
 
 {% macro nginxsite(domain, user, group,
-                   auth=None,
+                   auth=False,
                    template='standard-server.conf',
                    defaults={},
                    listen='80',
@@ -23,7 +23,7 @@
 # the defaults
 {% if ssl_alias %}
 {{ nginxsite(domain, user, group,
-          auth=None,
+          auth=False,
           template=template,
           defaults=defaults,
           listen='443',
