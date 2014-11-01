@@ -1,6 +1,7 @@
 {% macro rvmruby(domain, user, group,
                  defaults={},
                  ruby_version='1.9.3',
+                 rvm_version='latest',
                  ruby_gemset=False,
                  bundle_install=True,
                  custom=None) -%}
@@ -8,7 +9,7 @@
 install_rvm:
   cmd:
     - run
-    - name: curl -sSL https://get.rvm.io | bash -s stable
+    - name: curl -sSL https://get.rvm.io | bash -s -- --version {{ rvm_version }}
     - unless: /bin/bash -c "source ~/.rvm/scripts/rvm; type rvm | head -n 1 | grep 'rvm is a function'"
     - user: {{ user }}
     - require:
