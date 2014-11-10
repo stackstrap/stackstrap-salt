@@ -1,7 +1,8 @@
 {% macro rvmruby(domain, user, group,
                  defaults={},
-                 ruby_version='1.9.3',
-                 rvm_version='latest',
+                 ruby_version='2.1.4',
+                 rvm_version='1.25.33',
+                 rvm_globals=None,
                  ruby_gemset=False,
                  bundle_install=True,
                  custom=None) -%}
@@ -18,7 +19,7 @@ install_rvm:
 install_ruby:
   cmd:
     - run
-    - name: /bin/bash -c "source ~/.rvm/scripts/rvm; rvm install {{ ruby_version }} && rvm --default use {{ ruby_version }}"
+    - name: /bin/bash -c "source ~/.rvm/scripts/rvm; rvm install --autolibs=read {{ ruby_version }} && rvm --default use {{ ruby_version }}"
     - unless: /bin/bash -c "source ~/.rvm/scripts/rvm; rvm list rubies | grep '{{ ruby_version }}'"
     - user: {{ user }}
     - require:
@@ -35,6 +36,18 @@ install_gemset:
       - cmd: install_rvm
       - cmd: install_ruby
 {% endif %}
+
+{% if rvm_globals is iterable %}{% for global in rvm_globals %}
+rvm_global_{{ global }}:
+  cmd:
+    - run
+    - name: /bin/bash -c "source ~/.rvm/scripts/rvm; rvm @global do gem install {{ global }}"
+    - unless: /bin/bash -c "source ~/.rvm/scripts/rvm; rvm @global do gem list | grep '{{ global }}'"
+    - user: {{ user }}
+    - require:
+      - cmd: install_rvm
+      - cmd: install_ruby
+{% endfor %}{% endif %}
 
 {% if bundle_install %}
 bundle_install_gems:
