@@ -6,10 +6,12 @@
 
 {% macro nginxsite(domain, user, group,
                    auth=False,
+                   cors=False,
                    template='standard-server.conf',
                    defaults={},
                    listen='80',
                    server_name=None,
+                   static=False,
                    root='public',
                    create_root=True,
                    enabled=True,
@@ -24,10 +26,12 @@
 {% if ssl_alias %}
 {{ nginxsite(domain, user, group,
           auth=False,
+          cors=False,
           template=template,
           defaults=defaults,
           listen='443',
           server_name=server_name,
+          static=False,
           root=root,
           create_root=False,
           enabled=enabled,
@@ -81,12 +85,14 @@
     - template: jinja
     - defaults:
         auth: {{ auth }}
+        cors: "{{ cors }}"
         server_name: "{{ server_name or domain }}"
         listen: "{{ listen }}"
         domain: {{ domain }}
         owner: {{ user }}
         group: {{ group }}
         root: {{ root }}
+        static: {{ static }}
         ssl: {{ ssl }}{% if custom %}
         custom: "sites-available/{{ domain }}.{{ listen }}-custom"{% endif %}{% for n in defaults %}
         {{ n }}: "{{ defaults[n] }}"{% endfor %}
