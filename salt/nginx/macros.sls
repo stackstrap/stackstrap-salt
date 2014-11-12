@@ -85,8 +85,8 @@
     - template: jinja
     - defaults:
         auth: {{ auth }}
-        cors: "{{ cors }}"
-        server_name: "{{ server_name or domain }}"
+        cors: '{{ cors }}'
+        server_name: '{{ server_name or domain }}'
         listen: "{{ listen }}"
         domain: {{ domain }}
         owner: {{ user }}
